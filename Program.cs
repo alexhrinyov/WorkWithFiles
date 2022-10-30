@@ -71,12 +71,14 @@ using System.Threading.Tasks;
             foreach (var subdir in subDirs)
             {
                 WalkDirectoryTree(subdir);
+                if((subdir.GetFiles("*.*").Count()==0))
+                    subdir.Delete();
             }
         }
         // удаление файлов, которые не использовались более 30 мин
         public static void DeleteFiles(FileInfo file)
         {
-            if (((DateTime.Now - file.LastAccessTime) > TimeSpan.FromMinutes(30)))
+            if (((DateTime.Now - file.LastAccessTime) > TimeSpan.FromMinutes(1)))
             {
                 file.Delete();
             }
